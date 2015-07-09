@@ -1,11 +1,58 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Flash Cards</title>
-        <!-- We've provided some styles for you, aren't we nice? -->
-        <link rel="stylesheet" type="text/css" href="reset.css" />
-        <link rel="stylesheet" type="text/css" href="style.css" />
-    </head>
-    <body>
-    </body>
+
+<head>
+    <title>Flash Cards</title>
+    <!-- We've provided some styles for you, aren't we nice? -->
+    <link rel="stylesheet" type="text/css" href="reset.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+    <div ng-app="FlashCards">
+        <div class="flash-card" ng-controller="FlashCardController">
+            <h1>{{flashCard.question}}</h1>
+            <ul class="flash-card-answers">
+                <li class="flash-card-answer" ng-repeat="answer in flashCard.answers" ng-click="answerQuestion(answer)">
+                    {{answer.text}}
+                </li>
+            </ul>
+            <h2 class="answer-feedback" ng-show="answered">
+    					<span ng-show="answeredCorrectly">Yeah, you got it right!</span>
+					    <span ng-show="!answeredCorrectly">Nope, you got it wrong.</span>
+					  </h2>
+        </div>
+    </div>
+    <script src="/angular.js"></script>
+    <script src="/app.js"></script>
+    <script>
+    var app = angular.module("FlashCards", []);
+
+    app.controller("FlashCardController", function($scope) {
+        $scope.flashCard = {
+            question: 'What is Angular?',
+            answers: [{
+                text: 'A front end ....',
+                correct: true
+            }, {
+                text: 'Something ...',
+                correct: false
+            }, {
+                text: 'Some kind ...',
+                correct: false
+            }]
+        }
+        $scope.answerQuestion = function(answer) {
+            $scope.answered = true;
+            if (answer.correct) {
+                $scope.answeredCorrectly = true;
+
+            } else {
+                $scope.answeredCorrectly = false;
+            }
+        }
+    })
+    </script>
+</body>
+
 </html>
